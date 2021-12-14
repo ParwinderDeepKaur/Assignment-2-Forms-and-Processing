@@ -1,0 +1,88 @@
+﻿@page
+@model CreateWebForm.Pages.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CreateWebFormTable[0].Number)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreateWebFormTable[0].Date)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.CreateWebFormTable)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Number)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    <div class="col-2">
+                        <form method="post" asp-page-handler="Delete">
+                            <button class="btn btn-danger" name="id" type="submit" value="@item.Id">Delete</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <form method="post" id="Create">
+            <label class="control-label"> <b>ADD</b></label>
+            <div class="create-validation text-danger"></div>
+            <div class="row">
+                
+                <div class="form-group col-4">
+                    <label asp-for="CreateWebForm.Number" class="control-label"></label>
+                    <input asp-for="CreateWebForm.Number" class="form-control number" />
+                    <span asp-validation-for="CreateWebForm.Number" class="text-danger"></span>
+                </div>
+                    
+                <div class="form-group col-4">
+                    <label asp-for="CreateWebForm.Date" class="control-label"></label>
+                    <input asp-for="CreateWebForm.Date" class="form-control create-date" />
+                    <span asp-validation-for="CreateWebForm.Date" class="text-danger"></span>
+                </div>
+                <div class="form-group col-4" style="margin-top:32px !important;">
+                    <input onclick="CreateForm()" type="button" value="Submit" class="btn btn-success" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+   
+
+    function CreateForm() {
+
+        if ($.trim($(".number").val()) && $.trim($(".create-date").val())) {
+            $("#Create").submit();
+        }
+        else {
+            $(".create-validation").empty();
+            $(".create-validation").append("Please fill all the fields");
+        }
+    }
+
+
+
+</script>
